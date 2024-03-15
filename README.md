@@ -47,7 +47,7 @@ This project contains 3 pages namely: Dashboard, Products and Orders
   - dotenv: for secret variables
   - react-router-dom: for routing
   - tailwind css: for styling the app
-  - parcel:
+  - formik and yup: for form validation
   - babel: to make the code understandable to the browser
  
 ## Project Screen Shots
