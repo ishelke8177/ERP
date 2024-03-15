@@ -2,32 +2,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Transition, Dialog } from '@headlessui/react'
-import toast from 'react-hot-toast';
+import { FormikProvider, useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 import axios from 'axios'
 import config from '../config/config.json'
-import ItemCard from '../components/ItemCard'
-import Dropdown from '../components/Dropdown'
 import { handleImageUpload } from '../utils/helper';
 import { categoryArrForForm } from '../data/constants';
-import { useFormik } from 'formik';
-import { addItemValidationSchema } from '../validation/AddItemValidationSchema';
+import ItemCard from '../components/ItemCard'
+import Dropdown from '../components/Dropdown'
+import InputLabel from '../components/form/InputLabel';
+import TextInputField from '../components/form/TextInputField';
+import NumberInputField from '../components/form/NumberInputField';
+import SelectInputField from '../components/form/SelectInputField';
+import { addEditItemValidationSchema } from '../validation/addEditItemValidationSchema';
 
 const Products = () => {
-    const [categoryDropDown, setCategoryDropDown] = useState('All') // for dynamic UI
+    const [categoryDropDown, setCategoryDropDown] = useState('All')
     const [open, setOpen] = useState(false)
     const cancelButtonRef = useRef(null)
     const myItems = useSelector(store => store.foodItems.items)
     const [newFilteredArray, setNewFilteredArray] = useState([])
     const formik = useFormik({
         initialValues: {
-            category_name: 'Dosa',
+            category_name: '',
             specific_item: '',
             quantity: 1,
             price: 0,
             image_name: ''
         },
-        validationSchema: addItemValidationSchema,
+        validationSchema: addEditItemValidationSchema,
         onSubmit: handleSubmit,
       });
 
@@ -51,7 +55,7 @@ const Products = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         formik.setFieldValue('image_name', file);
-      };
+    };
 
     async function handleSubmit(values) {
         const obj = { ...values, image_name: values.image_name.name }
@@ -61,10 +65,6 @@ const Products = () => {
             if(resp.status === 201){
                 handleImageUpload(values.image_name);
                 toast.success('Item Added.')
-                // itemData.category_name = "";
-                // itemData.specific_item = "";
-                // itemData.quantity = "";
-                // itemData.price = "";
             }
         } catch (error) {
             toast.error('Failed to Add Item.')
@@ -92,13 +92,11 @@ const Products = () => {
                                 )}
                             </div> 
                             :
-                            <>
-                                <div className='flex flex-wrap justify-center gap-2'>
-                                    {Array.isArray(newFilteredArray) && newFilteredArray.map((item, index) => 
-                                        <ItemCard {...item} key={index} />
-                                    )}
-                                </div>
-                            </>
+                            <div className='flex flex-wrap justify-center gap-2'>
+                                {Array.isArray(newFilteredArray) && newFilteredArray.map((item, index) => 
+                                    <ItemCard {...item} key={index} />
+                                )}
+                            </div>
                         }
                     </>
                 }
@@ -120,87 +118,64 @@ const Products = () => {
                     </Transition.Child>
             
                     <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            enterTo="opacity-100 translate-y-0 sm:scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        >
-                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                    <form onSubmit={formik.handleSubmit} className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
+                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            >
+                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                        <FormikProvider value={formik}>
+                                            <form onSubmit={formik.handleSubmit} className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
+                                                <div className="mb-5">
+                                                    <InputLabel>Category Name</InputLabel>
+                                                    <SelectInputField label="Please choose Category" options={categoryArrForForm} {...formik.getFieldProps("category_name")}/>
+                                                    {formik.touched.category_name && formik.errors.category_name && (
+                                                        <div className="error" style={{ fontSize: '0.8rem', color: 'red' }}>{formik.errors.category_name}</div>
+                                                    )}
+                                                </div>
+                                                <div className="mb-5">
+                                                    <InputLabel>Food Name</InputLabel>
+                                                    <TextInputField {...formik.getFieldProps("specific_item")}/>
+                                                    {formik.touched.specific_item && formik.errors.specific_item && (
+                                                        <div className="error" style={{ fontSize: '0.8rem', color: 'red' }}>{formik.errors.specific_item}</div>
+                                                    )}
+                                                </div>
+                                                <div className="mb-5">
+                                                    <InputLabel>Price</InputLabel>
+                                                    <NumberInputField {...formik.getFieldProps("price")}/>
+                                                    {formik.touched.price && formik.errors.price && (
+                                                        <div className="error" style={{ fontSize: '0.8rem', color: 'red' }}>{formik.errors.price}</div>
+                                                    )}
+                                                </div>
+                                                <div className="mb-5">
+                                                    <InputLabel>Quantity Available</InputLabel>
+                                                    <NumberInputField {...formik.getFieldProps("quantity")}/>
+                                                    {formik.touched.quantity && formik.errors.quantity && (
+                                                        <div className="error" style={{ fontSize: '0.8rem', color: 'red' }}>{formik.errors.quantity}</div>
+                                                    )}
+                                                </div>
+                                                <div className="mb-5">
+                                                    <InputLabel>Upload Image</InputLabel>
+                                                    <input type="file" name='image_name' onChange={handleFileChange} onBlur={formik.handleBlur} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" />
+                                                    {formik.touched.image_name && formik.errors.image_name && (
+                                                        <div className="error" style={{ fontSize: '0.8rem', color: 'red' }}>{formik.errors.image_name}</div>
+                                                    )}
+                                                </div>
 
-                                        <label htmlFor="category_name" className="block text-black text-sm font-bold mb-1">
-                                            Category Name
-                                        </label>
-                                        <select name='category_name' onChange={formik.handleChange} value={formik.values.category_name} className="shadow appearance-none border rounded w-full py-2 px-1 text-black">
-                                            {categoryArrForForm.map((option, index) => {
-                                                return (
-                                                    <option key={index}>
-                                                        {option}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                        {formik.touched.category_name && formik.errors.category_name && (
-                                            <div className="error">{formik.errors.category_name}</div>
-                                        )}
-
-                                        <label htmlFor='specific_item' className="block text-black text-sm font-bold mb-1">
-                                            Food Name
-                                        </label>
-                                        <input type="text" name="specific_item" onChange={formik.handleChange} value={formik.values.specific_item} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        {formik.touched.specific_item && formik.errors.specific_item && (
-            <                               div className="error">{formik.errors.specific_item}</div>
-                                        )}
-
-                                        <label htmlFor='price' className="block text-black text-sm font-bold mb-1">
-                                            Price
-                                        </label>
-                                        <input type="number" name="price" onChange={formik.handleChange} value={formik.values.price} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        {formik.touched.price && formik.errors.price && (
-            <                               div className="error">{formik.errors.price}</div>
-                                        )}
-
-                                        <label htmlFor='quantity' className="block text-black text-sm font-bold mb-1">
-                                            Quantity Available
-                                        </label>
-                                        <input type="number" name="quantity" onChange={formik.handleChange} value={formik.values.quantity} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        {formik.touched.quantity && formik.errors.quantity && (
-            <                               div className="error">{formik.errors.quantity}</div>
-                                        )}
-
-                                        <label htmlFor='image_name' className="block text-black text-sm font-bold mb-1">
-                                           Upload Image
-                                        </label>
-                                        <input type='file' name='image_name' onChange={handleFileChange} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        {/* <input type='file' name='image_name' onChange={(e) => setFile(e.target.files[0])} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" /> */}
-                                        {formik.touched.image_name && formik.errors.image_name && (
-            <                               div className="error">{formik.errors.image_name}</div>
-                                        )}
-
-                                        <button type="submit" className="text-white bg-slate-900 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Add Item</button>
-                                    </form>
-
-                                </div>
-                                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-
-                                    <button
-                                        type="button"
-                                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                                        onClick={() => setOpen(false)}
-                                        ref={cancelButtonRef}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
+                                                <div className='flex justify-between'>
+                                                    <button type="submit" className="text-white bg-slate-900 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Add Item</button>
+                                                    <button type="button" onClick={() => setOpen(false)} ref={cancelButtonRef} className="text-white bg-slate-900 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </FormikProvider>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
                     </div>
                 </Dialog>
                 </Transition.Root>

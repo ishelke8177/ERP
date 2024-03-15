@@ -37,7 +37,7 @@ const ItemCard = ({ id, category_name, specific_item, quantity, price, image_nam
 
   return (
     <>
-      <div onClick={() => setOpen(true)} className="w-[200px] h-[230px] p-2 m-2 shadow-lg bg-pink-50 rounded-lg">
+      <div onClick={() => setOpen(true)} className="cursor-pointer w-[200px] h-[230px] p-2 m-2 shadow-lg bg-pink-50 rounded-lg">
         <img src={fileUrl} alt='logo' style={{ height: "120px", width: "95%", backgroundSize: "auto", position: "relative", borderRadius: "10px 10px 0 0" }}/>
         <div className="font-bold text-xl">{specific_item}</div>
         <div>Price: {price}</div>

@@ -16,10 +16,10 @@ export const fetchItemById = createAsyncThunk("fetchItemById", async (itemId) =>
     return resp?.data;
 });
 
-export const updateItemById = createAsyncThunk("updateItemById", async ({ itemId, itemData, imageFile }) => {
+export const updateItemById = createAsyncThunk("updateItemById", async ({ itemId, values, imageFile }) => {
     try {
-        const resp = await axios.put(`${config.HOST_LINK}/items/${itemId}`, itemData)
-        handleImageDelete(itemData?.image_name);
+        const resp = await axios.put(`${config.HOST_LINK}/items/${itemId}`, values)
+        handleImageDelete(values?.image_name);
         handleImageUpload(imageFile)
         toast.success('Item Updated')
         return resp?.data;
@@ -52,7 +52,7 @@ export const addFoodItem = createAsyncThunk("addFoodItem", async (itemObj) => {
 export const orderItem = createAsyncThunk("orderItem", async (itemObj) => {
     try {
         const resp = await axios.post(`${config.HOST_LINK}/orders`, itemObj)
-        console.log(resp);
+
         if(resp?.status === 201){
             toast.success('Order Placed')
         }

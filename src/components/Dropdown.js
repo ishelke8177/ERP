@@ -9,7 +9,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const Dropdown = ({setCurrentCategoryD, currentCategoryD}) => {
+const Dropdown = ({setCategoryDropDown, categoryDropDown}) => {
     
     return (
         <Menu as="div" className="relative inline-block text-right">
@@ -17,7 +17,7 @@ const Dropdown = ({setCurrentCategoryD, currentCategoryD}) => {
                 <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                     Category
                 <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-                {currentCategoryD}
+                {categoryDropDown}
                 </Menu.Button>
             </div>
 
@@ -41,7 +41,7 @@ const Dropdown = ({setCurrentCategoryD, currentCategoryD}) => {
                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                         'block px-4 py-2 text-lg'
                                     )}
-                                    onClick={() => setCurrentCategoryD(item)}
+                                    onClick={() => setCategoryDropDown(item)}
                                 >
                                     {item}
                                 </a>
