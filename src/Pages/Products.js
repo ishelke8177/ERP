@@ -10,66 +10,61 @@ import ItemCard from '../components/ItemCard'
 import Dropdown from '../components/Dropdown'
 import { handleImageUpload } from '../utils/helper';
 import { categoryArrForForm } from '../data/constants';
+import { useFormik } from 'formik';
+import { addItemValidationSchema } from '../validation/AddItemValidationSchema';
 
 const Products = () => {
-    const [currentCategoryD, setCurrentCategoryD] = useState('All') // for dynamic UI
+    const [categoryDropDown, setCategoryDropDown] = useState('All') // for dynamic UI
     const [open, setOpen] = useState(false)
-    const [itemData, setItemData] = useState({
-        category_name: "",
-        specific_item: "",
-        quantity: "",
-        price: "",
-    })
-    const [file, setFile] = useState();
     const cancelButtonRef = useRef(null)
-    const [currentCategory, setCategory] = useState('Dosa'); // for form
     const myItems = useSelector(store => store.foodItems.items)
     const [newFilteredArray, setNewFilteredArray] = useState([])
+    const formik = useFormik({
+        initialValues: {
+            category_name: 'Dosa',
+            specific_item: '',
+            quantity: 1,
+            price: 0,
+            image_name: ''
+        },
+        validationSchema: addItemValidationSchema,
+        onSubmit: handleSubmit,
+      });
 
     useEffect(() => {
         let arr;
-        if(currentCategoryD === 'Dosa'){
+        if(categoryDropDown === 'Dosa'){
             arr = myItems.filter((item) => item.category_name === 'Dosa')
         }
-        else if(currentCategoryD === 'Burger'){
+        else if(categoryDropDown === 'Burger'){
             arr = myItems.filter((item) => item.category_name === 'Burger')
         }
-        else if(currentCategoryD === 'Chinese'){
+        else if(categoryDropDown === 'Chinese'){
             arr = myItems.filter((item) => item.category_name === 'Chinese')
         }
         else{
             arr = myItems.filter((item) => item)
         }
         setNewFilteredArray(arr)
-    }, [currentCategoryD])
-    
+    }, [categoryDropDown])
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setItemData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    };
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        formik.setFieldValue('image_name', file);
+      };
 
-    const onOptionChangeHandler = (event) => {
-        setCategory(event.target.value);
-    };
-
-    console.log('newFilteredArray: ', newFilteredArray);
-    console.log('myItems: ', myItems);
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-        const obj = { ...itemData, category_name: currentCategory, image_name: file.name }
+    async function handleSubmit(values) {
+        const obj = { ...values, image_name: values.image_name.name }
         try {
             const resp = await axios.post(`${config.HOST_LINK}/items`, obj)
 
             if(resp.status === 201){
-                handleImageUpload(file);
-                // setCurrentCategoryD('Dosa'); 
+                handleImageUpload(values.image_name);
                 toast.success('Item Added.')
-                itemData.category_name = "";
-                itemData.specific_item = "";
-                itemData.quantity = "";
-                itemData.price = "";
+                // itemData.category_name = "";
+                // itemData.specific_item = "";
+                // itemData.quantity = "";
+                // itemData.price = "";
             }
         } catch (error) {
             toast.error('Failed to Add Item.')
@@ -82,21 +77,12 @@ const Products = () => {
             <div>
                 <div className='flex justify-between'>
                     <div className='ml-6 mt-3'>
-                        <Dropdown currentCategoryD={currentCategoryD} setCurrentCategoryD={setCurrentCategoryD}/>
+                        <Dropdown categoryDropDown={categoryDropDown} setCategoryDropDown={setCategoryDropDown}/>
                     </div>
                     <div className='mt-3'>
                         <button type="button" onClick={() => setOpen(true)} className="text-gray-900 bg-white border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Add Item</button>
                     </div>
                 </div>
-                {/* {newFilteredArray.length===0 ? <div className='text-center'>No Items to show...</div>:
-                    <div className='flex flex-wrap justify-center gap-2'>
-                        {Array.isArray(newFilteredArray) && newFilteredArray.map((item, index) => 
-                            <ItemCard {...item} key={index} />
-                        )}
-                    </div>
-
-                    
-                } */}
                 {myItems.length===0 ? <div className='text-center'>No Items to show...</div>:
                     <>
                         {newFilteredArray.length===0 ?
@@ -115,13 +101,6 @@ const Products = () => {
                             </>
                         }
                     </>
-                    /* <div className='flex flex-wrap justify-center gap-2'>
-                        {Array.isArray(newFilteredArray) && newFilteredArray.map((item, index) => 
-                            <ItemCard {...item} key={index} />
-                        )}
-                    </div> */
-
-
                 }
             </div>
 
@@ -153,11 +132,12 @@ const Products = () => {
                         >
                             <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                                    <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
-                                        <label className="block text-black text-sm font-bold mb-1">
+                                    <form onSubmit={formik.handleSubmit} className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
+
+                                        <label htmlFor="category_name" className="block text-black text-sm font-bold mb-1">
                                             Category Name
                                         </label>
-                                        <select onChange={onOptionChangeHandler} name='category_name' className="shadow appearance-none border rounded w-full py-2 px-1 text-black">
+                                        <select name='category_name' onChange={formik.handleChange} value={formik.values.category_name} className="shadow appearance-none border rounded w-full py-2 px-1 text-black">
                                             {categoryArrForForm.map((option, index) => {
                                                 return (
                                                     <option key={index}>
@@ -166,32 +146,49 @@ const Products = () => {
                                                 );
                                             })}
                                         </select>
-                                        <label className="block text-black text-sm font-bold mb-1">
+                                        {formik.touched.category_name && formik.errors.category_name && (
+                                            <div className="error">{formik.errors.category_name}</div>
+                                        )}
+
+                                        <label htmlFor='specific_item' className="block text-black text-sm font-bold mb-1">
                                             Food Name
                                         </label>
-                                        <input name="specific_item" value={itemData.specific_item} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        <label className="block text-black text-sm font-bold mb-1">
+                                        <input type="text" name="specific_item" onChange={formik.handleChange} value={formik.values.specific_item} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+                                        {formik.touched.specific_item && formik.errors.specific_item && (
+            <                               div className="error">{formik.errors.specific_item}</div>
+                                        )}
+
+                                        <label htmlFor='price' className="block text-black text-sm font-bold mb-1">
                                             Price
                                         </label>
-                                        <input name="price" value={itemData.price} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        <label className="block text-black text-sm font-bold mb-1">
+                                        <input type="number" name="price" onChange={formik.handleChange} value={formik.values.price} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+                                        {formik.touched.price && formik.errors.price && (
+            <                               div className="error">{formik.errors.price}</div>
+                                        )}
+
+                                        <label htmlFor='quantity' className="block text-black text-sm font-bold mb-1">
                                             Quantity Available
                                         </label>
-                                        <input name="quantity" value={itemData.quantity} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                                        <label className="block text-black text-sm font-bold mb-1">
+                                        <input type="number" name="quantity" onChange={formik.handleChange} value={formik.values.quantity} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+                                        {formik.touched.quantity && formik.errors.quantity && (
+            <                               div className="error">{formik.errors.quantity}</div>
+                                        )}
+
+                                        <label htmlFor='image_name' className="block text-black text-sm font-bold mb-1">
                                            Upload Image
                                         </label>
-                                        <input type='file' onChange={(e) => setFile(e.target.files[0])} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+                                        <input type='file' name='image_name' onChange={handleFileChange} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+                                        {/* <input type='file' name='image_name' onChange={(e) => setFile(e.target.files[0])} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" /> */}
+                                        {formik.touched.image_name && formik.errors.image_name && (
+            <                               div className="error">{formik.errors.image_name}</div>
+                                        )}
+
+                                        <button type="submit" className="text-white bg-slate-900 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Add Item</button>
                                     </form>
+
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                    <button
-                                        type="button"
-                                        className="inline-flex w-full justify-center rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
-                                        onClick={handleSubmit}
-                                    >
-                                        Add
-                                    </button>
+
                                     <button
                                         type="button"
                                         className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"

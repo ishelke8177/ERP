@@ -46,6 +46,7 @@ const handleImageUpload = async (file) => {
 
     try {
         const resp = await upload;
+        console.log(resp,'resp');
         window.location.reload(false)
     } catch (error) {
         console.log(error);

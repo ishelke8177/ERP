@@ -1,14 +1,6 @@
 {
   "items": [
     {
-      "id": "85ac",
-      "category_name": "Dosa",
-      "specific_item": "Masala Dosa",
-      "quantity": "8",
-      "price": "100",
-      "image_name": "masala_dosa.avif"
-    },
-    {
       "id": "5a04",
       "category_name": "Burger",
       "specific_item": "Veg Zinger Burger with Cheese",
@@ -25,28 +17,12 @@
       "image_name": "Veg_Zinger_Burger_withCheese.avif"
     },
     {
-      "id": "069e",
-      "category_name": "Chinese",
-      "specific_item": "Veg Manchow Soup",
-      "quantity": "5",
-      "price": "120",
-      "image_name": "Veg_Manchow_Soup.avif"
-    },
-    {
-      "id": "d92a",
-      "category_name": "Chinese",
-      "specific_item": "Veg Manchurian Dry",
-      "quantity": "4",
-      "price": "202",
-      "image_name": "Veg_Manchurian_Dry.avif"
-    },
-    {
-      "id": "aec8",
       "category_name": "Dosa",
-      "specific_item": "cut dosa",
-      "quantity": "5",
-      "price": "100",
-      "image_name": "cut_dosa.avif"
+      "specific_item": "masala",
+      "quantity": "22",
+      "price": "43",
+      "image_name": "cut_dosa.avif",
+      "id": "a7f2"
     }
   ],
   "orders": [
@@ -115,6 +91,17 @@
       "quantity": 1,
       "pricePerItem": 33,
       "totalPrice": 33
+    },
+    {
+      "id": "7d69",
+      "order_item_name": "cut dosa",
+      "customer_name": "john ",
+      "order_date": "2024-03-16",
+      "status": "Confirmed",
+      "imageName": "cut_dosa.avif",
+      "quantity": 2,
+      "pricePerItem": 43,
+      "totalPrice": 86
     }
   ]
 }

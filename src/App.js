@@ -1,5 +1,5 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import Header from "./components/Header";
@@ -11,8 +11,6 @@ import EditItem from "./Pages/EditItem";
 import ProceedOrder from "./Pages/ProceedOrder";
 import Products from "./Pages/Products";
 import store from "./app/store";
-import { useEffect } from "react";
-import { fetchFoodItems, getOrderItems } from "./features/apiCalls";
 
 function Home() {
   return (
