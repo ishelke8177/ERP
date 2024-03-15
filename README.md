@@ -33,4 +33,19 @@ This project contains 3 pages namely: Dashboard, Products and Orders
   - If clicked on order then a form will open up where the user can placed his order.  
 - Orders Page:   
    - On this page I have shown a table which shows respective orders and their details such as order id, customer name,  
-   status of the order, item name that has been ordered.  
+   status of the order, item name that has been ordered.
+
+## Project TechStack Description
+- For front end I have used React.js, reduxToolkit, Tailwind CSS
+- For Backend I have used fake backend API i.e. Json-server
+- For storing images I have used S3 bucket
+- Description of the packages
+  - aws-sdk: For storing images to S3 bucket from front end
+  - axios: for making API calls
+  - date-fns: for manipulating dates.
+  - react-redux: for connecting react with redux
+  - dotenv: for secret variables
+  - react-router-dom: for routing
+  - tailwind css: for styling the app
+  - parcel:
+  - babel: to make the code understandable to the browser
