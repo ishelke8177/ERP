@@ -51,3 +51,22 @@ This project contains 3 pages namely: Dashboard, Products and Orders
   - babel: to make the code understandable to the browser
  
 ## Project Screen Shots
+- Home screen of my app
+![home](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/1ffeb888-3994-4e25-9094-6f032b4ef749)
+- Products Page
+![products](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/a0b2b5d2-7e6b-4951-a1b7-1010d790b373)
+- After selecting dosa as category from product page
+  ![select_dosa](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/75f57fcd-9d94-4a8f-abb1-83f781eb2c10)
+- Add Item Form which will open on clicking add item button
+    ![Add form](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/e2f23343-879d-47d6-b4f0-c5e05ab03a39)
+- Particular Card details on clicking a particular card
+    ![card details](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/da05344a-beaf-4806-9b58-c8bdeea2d145)
+- Edit item form on clicking Edit button
+    ![edit _item](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/8e3e9baf-fd2e-4781-b496-8963ec4c5a65)
+- Order Form on clicking Order Button
+    ![Place_Order](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/1b09104d-698d-4387-8b1b-f9b3061e47c5)
+- Orders Page which shows order history
+  ![orders_page](https://github.com/ishelke8177/ENTNT-ERP/assets/63368479/06793492-049e-4d49-9936-0fd3ad4dc693)
+
+
+
