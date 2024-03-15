@@ -1,0 +1,120 @@
+{
+  "items": [
+    {
+      "id": "85ac",
+      "category_name": "Dosa",
+      "specific_item": "Masala Dosa",
+      "quantity": "8",
+      "price": "100",
+      "image_name": "masala_dosa.avif"
+    },
+    {
+      "id": "5a04",
+      "category_name": "Burger",
+      "specific_item": "Veg Zinger Burger with Cheese",
+      "quantity": "10",
+      "price": "200",
+      "image_name": "Veg_Zinger_Burger_withCheese.avif"
+    },
+    {
+      "id": "486c",
+      "category_name": "Burger",
+      "specific_item": "Veg Zinger Burger",
+      "quantity": "6",
+      "price": "150",
+      "image_name": "Veg_Zinger_Burger_withCheese.avif"
+    },
+    {
+      "id": "069e",
+      "category_name": "Chinese",
+      "specific_item": "Veg Manchow Soup",
+      "quantity": "5",
+      "price": "120",
+      "image_name": "Veg_Manchow_Soup.avif"
+    },
+    {
+      "id": "d92a",
+      "category_name": "Chinese",
+      "specific_item": "Veg Manchurian Dry",
+      "quantity": "4",
+      "price": "202",
+      "image_name": "Veg_Manchurian_Dry.avif"
+    },
+    {
+      "id": "aec8",
+      "category_name": "Dosa",
+      "specific_item": "cut dosa",
+      "quantity": "5",
+      "price": "100",
+      "image_name": "cut_dosa.avif"
+    }
+  ],
+  "orders": [
+    {
+      "id": "448a",
+      "order_item_name": "masala dosa",
+      "customer_name": "Ishwar",
+      "order_date": "2024-03-14",
+      "status": "Confirmed",
+      "imageName": "masala_dosa.avif",
+      "quantity": 2,
+      "pricePerItem": 33,
+      "totalPrice": 66
+    },
+    {
+      "id": "ec72",
+      "order_item_name": "masala dosa",
+      "customer_name": "sdfsd",
+      "order_date": "2024-03-15",
+      "status": "Confirmed",
+      "imageName": "masala_dosa.avif",
+      "quantity": 1,
+      "pricePerItem": 33,
+      "totalPrice": 33
+    },
+    {
+      "id": "9df5",
+      "order_item_name": "masala dosa",
+      "customer_name": "sdfsdf",
+      "order_date": "2024-03-23",
+      "status": "Confirmed",
+      "imageName": "masala_dosa.avif",
+      "quantity": 1,
+      "pricePerItem": 33,
+      "totalPrice": 33
+    },
+    {
+      "id": "5438",
+      "order_item_name": "masala dosa",
+      "customer_name": "sdfsd",
+      "order_date": "2024-03-16",
+      "status": "Confirmed",
+      "imageName": "masala_dosa.avif",
+      "quantity": 2,
+      "pricePerItem": 33,
+      "totalPrice": 66
+    },
+    {
+      "id": "bc55",
+      "order_item_name": "masala dosa",
+      "customer_name": "fsdfdf",
+      "order_date": "2024-03-17",
+      "status": "Confirmed",
+      "imageName": "masala_dosa.avif",
+      "quantity": 1,
+      "pricePerItem": 33,
+      "totalPrice": 33
+    },
+    {
+      "id": "34bb",
+      "order_item_name": "masala dosa",
+      "customer_name": "sdfds",
+      "order_date": "2024-03-08",
+      "status": "Confirmed",
+      "imageName": "masala_dosa.avif",
+      "quantity": 1,
+      "pricePerItem": 33,
+      "totalPrice": 33
+    }
+  ]
+}

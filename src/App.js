@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Provider, useDispatch } from "react-redux";
+import { createRoot } from "react-dom/client";
+import { Toaster } from "react-hot-toast";
+import Header from "./components/Header";
+import Error from "./components/Error";
+import Footer from "./components/Footer";
+import Body from "./Pages/Body";
+import Orders from "./Pages/Orders";
+import EditItem from "./Pages/EditItem";
+import ProceedOrder from "./Pages/ProceedOrder";
+import Products from "./Pages/Products";
+import store from "./app/store";
+import { useEffect } from "react";
+import { fetchFoodItems, getOrderItems } from "./features/apiCalls";
 
-function App() {
+function Home() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div><Toaster/></div>
+      <Provider store={store}>
+        <Header />
+        <Outlet />
+        <Footer />
+      </Provider>
+    </>
   );
 }
 
-export default App;
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: '/',
+        element: <Body />,
+      },
+      {
+        path: '/products',
+        element: <Products />,
+      },
+      {
+        path: '/proceed-order/:orderId',
+        element: <ProceedOrder />,
+      },
+      {
+        path: '/edit-order/:itemId',
+        element: <EditItem />,
+      },
+      {
+        path: '/orders',
+        element: <Orders />,
+      },
+    ],
+  },
+]);
+
+const root = createRoot(document.getElementById('root'));
+root.render(<RouterProvider router={appRouter} />);
