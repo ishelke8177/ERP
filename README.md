@@ -49,3 +49,5 @@ This project contains 3 pages namely: Dashboard, Products and Orders
   - tailwind css: for styling the app
   - parcel:
   - babel: to make the code understandable to the browser
+ 
+## Project Screen Shots
