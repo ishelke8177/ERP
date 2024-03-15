@@ -16,21 +16,21 @@ http://localhost:3000/orders
 - This command will start the front end server at: http://localhost:1234
 
 ## Project Overview
-- This project contains 3 pages namely: Dashboard, Products and Orders   
-a) Dashboard Page:   
+This project contains 3 pages namely: Dashboard, Products and Orders   
+- Dashboard Page:   
    In this page I have shown 3 cards which shows the information   
    i) Total number of products the app has   
    ii) Total Orders that has been placed   
-   iii) Total Categories available  
-b) Products Page:  
+   iii) Total Categories available
+- Products Page:  
    This page contains the total products that a user will add.   
-   There is an add Item button at the top right which will open up a form and the user can add product.
-   There are several cards shown on this page with values such as Item name, price, quantity etc.
-   In this page when you click on card it will open up a detailed card where a user can edit that particular item
-   delete or proceed to order that particular item.
-   If clicked on edit it will open up a form where the user can edit the information.
-   If clicked on delete then the item will be deleted.
-   If clicked on order then a form will open up where the user can placed his order.
-c) Orders Page:
-   On this page I have shown a table which shows respective orders and their details such as order id, customer name,
-   status of the order, item name that has been ordered.
+   There is an add Item button at the top right which will open up a form and the user can add product.  
+   There are several cards shown on this page with values such as Item name, price, quantity etc.  
+   In this page when you click on card it will open up a detailed card where a user can edit that particular item  
+   delete or proceed to order that particular item.  
+   If clicked on edit it will open up a form where the user can edit the information.  
+   If clicked on delete then the item will be deleted.  
+   If clicked on order then a form will open up where the user can placed his order.  
+- Orders Page:   
+   On this page I have shown a table which shows respective orders and their details such as order id, customer name,  
+   status of the order, item name that has been ordered.  
