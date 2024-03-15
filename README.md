@@ -16,14 +16,14 @@ http://localhost:3000/orders
 - This command will start the front end server at: http://localhost:1234
 
 ## Project Overview
-- This project contains 3 pages namely: Dashboard, Products and Orders
-a) Dashboard Page:
-   In this page I have shown 3 cards which shows the information
-   i) Total number of products the app has
-   ii) Total Orders that has been placed
-   iii) Total Categories available
-b) Products Page:
-   This page contains the total products that a user will add.
+- This project contains 3 pages namely: Dashboard, Products and Orders   
+a) Dashboard Page:   
+   In this page I have shown 3 cards which shows the information   
+   i) Total number of products the app has   
+   ii) Total Orders that has been placed   
+   iii) Total Categories available  
+b) Products Page:  
+   This page contains the total products that a user will add.   
    There is an add Item button at the top right which will open up a form and the user can add product.
    There are several cards shown on this page with values such as Item name, price, quantity etc.
    In this page when you click on card it will open up a detailed card where a user can edit that particular item
