@@ -7,21 +7,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - This command will install all the required packages to run the app.
 
 2) Then after this run command: npx json-server db.json
-- This command will start the fake json backend server.
-- The endpoints will be
-http://localhost:3000/items
-http://localhost:3000/orders
+   - This command will start the fake json backend server.
+   - The endpoints will be
+      - http://localhost:3000/items
+      - http://localhost:3000/orders
 
 3) Now open another terminal and run command: npm start
 - This command will start the front end server at: http://localhost:1234
 
 ## Project Overview
 This project contains 3 pages namely: Dashboard, Products and Orders   
-- Dashboard Page:   
-   In this page I have shown 3 cards which shows the information   
-   i) Total number of products the app has   
-   ii) Total Orders that has been placed   
-   iii) Total Categories available
+- Dashboard Page:
+  - In this page I have shown 3 cards which shows the information
+    - Total number of products the app has   
+    - Total Orders that has been placed   
+    - Total Categories available
 - Products Page:
   - This page contains the total products that a user will add.   
   - There is an add Item button at the top right which will open up a form and the user can add product.  
