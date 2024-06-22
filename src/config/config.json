@@ -1,8 +1,8 @@
 {
-    "IMG_URL": "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/",
-    "HOST_LINK": "http://localhost:3000",
-    "S3_BUCKET_NAME": "direct-upload-react-s3",
-    "AWS_ACCESS_KEY_ID": "AKIAW3MEC3BFKMV5M4XY",
-    "AWS_SECRET_ACCESS_KEY": "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",
-    "REGION": "us-east-1"
+    "IMG_URL": "",
+    "HOST_LINK": "",
+    "S3_BUCKET_NAME": "",
+    "AWS_ACCESS_KEY_ID": "",
+    "AWS_SECRET_ACCESS_KEY": "",
+    "REGION": ""
 }
